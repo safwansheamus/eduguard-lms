@@ -5,10 +5,15 @@ import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
 
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
+import { Banner } from "@/components/banner";
+
 import { ChapterTitleForm } from "./_components/chapter-title-form";
 import { ChapterDescriptionForm } from "./_components/chapter-description-form";
 import { ChapterAccessForm } from "./_components/chapter-access-form";
 import { ChapterVideoForm } from "./_components/chapter-video-form";
+import { boolean } from "zod";
+import { ChapterActions } from "./_components/chapter-actions";
+
 
 
 const ChapterIdPage = async ({
@@ -48,7 +53,16 @@ const ChapterIdPage = async ({
 
     const completionText = `(${completedFields}/${totalFields})`;
 
-    return ( 
+    const isComplete = requiredFields.every(Boolean);
+
+    return (
+        <>
+        {!chapter.isPublished && (
+            <Banner 
+                variant="warning"
+                label="This chapter is unpublished. It will not be visible in the course"
+            />
+        )}
         <div className="p-6">
             <div className="flex items-center justify-between">
                 <div className="w-full">
@@ -67,7 +81,13 @@ const ChapterIdPage = async ({
                             <span className="text-sm text-slate-700">
                                 Complete all fields {completionText}
                             </span>
-                        </div>     
+                        </div>  
+                        <ChapterActions
+                            disabled={!isComplete}
+                            courseId={params.courseId}
+                            chapterId={params.chapterId}
+                            isPublished={chapter.isPublished}
+                        />   
                     </div>                
                 </div>
             </div>
@@ -120,6 +140,7 @@ const ChapterIdPage = async ({
                 </div>
             </div>
         </div>
+        </>
      );
 }
  
