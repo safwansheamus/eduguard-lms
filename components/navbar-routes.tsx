@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { SearchInput } from "./search-input";
 
 
-
 export const NavbarRoutes = () => {
     const pathname = usePathname();
 

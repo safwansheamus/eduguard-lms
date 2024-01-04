@@ -9,6 +9,7 @@ import { File } from "lucide-react";
 
 import { VideoPlayer } from "./_components/video-player";
 import { CourseEnrollButton } from "./_components/course-enroll-button";
+import { CourseProgressButton } from "./_components/course-progress-button";
 
 
 const ChapterIdPage = async ({
@@ -75,9 +76,12 @@ const ChapterIdPage = async ({
                             {chapter.title}
                         </h2>
                         {purchase ? (
-                            <div>
-                                {/* TODO: Add courseProgressButton */}
-                            </div>
+                            <CourseProgressButton 
+                              chapterId={params.chapterId}
+                              courseId={params.courseId}
+                              nextChapterId={nextChapter?.courseId}
+                              isCompleted={!!userProgress?.isCompleted}
+                            />
                         ) : (
                         <CourseEnrollButton
                             courseId={params.courseId}
